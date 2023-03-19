@@ -10,37 +10,48 @@ public class Tests
     }
 
     [Test]
-    public void Test1()
+    public void NoRandLinksTest()
     {
         ListRand listRand = RandListUtils.CreateListFromStrArr(new string[] {"a", "b", "asdas"});
         string testFilePath = AppDomain.CurrentDomain.BaseDirectory + "ListRand.bin";
-        var initialList = listRand.ToList();
-        listRand.Serialize(File.OpenWrite(testFilePath));
-        var processedList = listRand.Deserialize(File.OpenRead(testFilePath)).ToList();
-        ValidateLists(initialList, processedList);
+        ValidateList(listRand, testFilePath);
     }
 
     [Test]
-    public void Test2()
+    public void RandLinksTest()
     {
         ListRand listRand = RandListUtils.CreateListFromStrArr(new string[] {"a", "b", "asdas"}, true);
-        string testFilePath = AppDomain.CurrentDomain.BaseDirectory + "ListRand.bin";
-        var initialList = listRand.ToList();
-        listRand.Serialize(File.OpenWrite(testFilePath));
-        var processedList = listRand.Deserialize(File.OpenRead(testFilePath)).ToList();
-        ValidateLists(initialList, processedList);
+        string testFilePath = AppDomain.CurrentDomain.BaseDirectory + "ListRand1.bin";
+        ValidateList(listRand,testFilePath);
+    }
+    
+    [Test]
+    public void EmptyListTest()
+    {
+        ListRand listRand = new ListRand();
+        string testFilePath = AppDomain.CurrentDomain.BaseDirectory + "ListRand2.bin";
+        ValidateList(listRand,testFilePath);
     }
 
-    private void ValidateLists(List<ListNode> A, List<ListNode> B)
+    private void ValidateList(ListRand listRand, string testFilePath)
     {
-        for (int i = 0; i < A.Count - 1; i++)
+        var initialList = listRand.ToList();
+        listRand.Serialize(File.OpenWrite(testFilePath));
+        if (!listRand.Deserialize(File.OpenRead(testFilePath), out var processedListRand))
         {
-            if (A[i].Data.CompareTo(B[i].Data) != 0)
+            Assert.Fail();
+        }
+
+        var processedList = processedListRand.ToList();
+        for (int i = 0; i < initialList.Count - 1; i++)
+        {
+            if (initialList[i].Data.CompareTo(processedList[i].Data) != 0)
             {
                 Assert.Fail();
             }
 
-            if (A[i].Rand != null && A[i].Rand.Data.CompareTo(B[i].Rand.Data) != 0)
+            if (initialList[i].Rand != null && initialList[i].Rand.Data.CompareTo(processedList[i].Rand.Data) != 0 ||
+                initialList[i].Rand == processedList[i].Rand)
             {
                 Assert.Fail();
             }

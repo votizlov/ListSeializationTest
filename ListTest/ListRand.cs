@@ -80,32 +80,51 @@ public class ListRand
         binaryWriter.Close();
     }
 
-    public ListRand Deserialize(FileStream s)
+    public bool Deserialize(FileStream s, out ListRand? output)
     {
-        BinaryReader binaryReader = new BinaryReader(s);
-        ListRand output = new ListRand();
-        int nodesCount = binaryReader.ReadInt32();
-        ListNode[] nodes = new ListNode[nodesCount];
-        ListNode prev = null;
-
-        for (int i = 0; i < nodesCount; i++)
+        try
         {
-            nodes[i] = new ListNode(prev, null, null, binaryReader.ReadString());
-            prev = nodes[i];
-            output.Add(nodes[i]);
+            BinaryReader binaryReader = new BinaryReader(s);
+            int nodesCount = binaryReader.ReadInt32();
+            output = new ListRand();
+            if (nodesCount == 0)
+            {
+                return true;
+            }
+
+            ListNode[] nodes = new ListNode[nodesCount];
+
+            nodes[0] = new ListNode(null, null, null, binaryReader.ReadString());
+            output.Add(nodes[0]);
+            ListNode prev = nodes[0];
+
+            for (int i = 1; i < nodesCount; i++)
+            {
+                nodes[i] = new ListNode(prev, null, null, binaryReader.ReadString());
+                prev.Next = nodes[i];
+                prev = nodes[i];
+                output.Add(nodes[i]);
+            }
+
+            int randNodeIndex;
+
+            for (int i = 0; i < nodesCount; i++)
+            {
+                randNodeIndex = binaryReader.ReadInt32();
+                if (randNodeIndex == -1)
+                    continue;
+                nodes[i].Rand = nodes[randNodeIndex];
+            }
+            
+            binaryReader.Close();
+
+            return true;
         }
-
-        int randNodeIndex;
-
-        for (int i = 0; i < nodesCount; i++)
+        catch (FileNotFoundException ex)
         {
-            randNodeIndex = binaryReader.ReadInt32();
-            if (randNodeIndex == -1)
-                continue;
-            nodes[i].Rand = nodes[randNodeIndex];
+            output = null;
+            return false;
         }
-
-        return output;
     }
 
     public List<ListNode> ToList()
@@ -115,6 +134,7 @@ public class ListRand
         while (currentNode != null)
         {
             output.Add(currentNode);
+            Console.WriteLine(currentNode.Data);
             currentNode = currentNode.Next;
         }
 

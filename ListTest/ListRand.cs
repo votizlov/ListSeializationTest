@@ -113,6 +113,7 @@ public class ListRand
                 randNodeIndex = binaryReader.ReadInt32();
                 if (randNodeIndex == -1)
                     continue;
+
                 nodes[i].Rand = nodes[randNodeIndex];
             }
             
@@ -120,8 +121,15 @@ public class ListRand
 
             return true;
         }
-        catch (FileNotFoundException ex)
+        catch (EndOfStreamException ex)
         {
+            Console.WriteLine("Неожиданный конец файла");
+            output = null;
+            return false;
+        }
+        catch (IOException ex)
+        {
+            Console.WriteLine("Ошибка чтения файла");
             output = null;
             return false;
         }
@@ -134,7 +142,6 @@ public class ListRand
         while (currentNode != null)
         {
             output.Add(currentNode);
-            Console.WriteLine(currentNode.Data);
             currentNode = currentNode.Next;
         }
 

@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Admin\\RiderProjects\\ListTest\\ListTest\\ListTest.csproj": {}
+    "C:\\Users\\Drugo\\Documents\\GitHub\\ListSeializationTest\\ListTest\\ListTest.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Admin\\RiderProjects\\ListTest\\ListTest\\ListTest.csproj": {
+    "C:\\Users\\Drugo\\Documents\\GitHub\\ListSeializationTest\\ListTest\\ListTest.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Admin\\RiderProjects\\ListTest\\ListTest\\ListTest.csproj",
+        "projectUniqueName": "C:\\Users\\Drugo\\Documents\\GitHub\\ListSeializationTest\\ListTest\\ListTest.csproj",
         "projectName": "ListTest",
-        "projectPath": "C:\\Users\\Admin\\RiderProjects\\ListTest\\ListTest\\ListTest.csproj",
-        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Admin\\RiderProjects\\ListTest\\ListTest\\obj\\",
+        "projectPath": "C:\\Users\\Drugo\\Documents\\GitHub\\ListSeializationTest\\ListTest\\ListTest.csproj",
+        "packagesPath": "C:\\Users\\Drugo\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Drugo\\Documents\\GitHub\\ListSeializationTest\\ListTest\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Drugo\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
@@ -53,7 +53,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Users\\Drugo\\.dotnet\\sdk\\7.0.200\\RuntimeIdentifierGraph.json"
         }
       }
     }

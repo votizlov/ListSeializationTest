@@ -32,6 +32,15 @@ public class Tests
         string testFilePath = AppDomain.CurrentDomain.BaseDirectory + "ListRand2.bin";
         ValidateList(listRand,testFilePath);
     }
+    
+    [Test]
+    public void BadFileTest()
+    {
+        ListRand listRand = new ListRand();
+        string testFilePath = AppDomain.CurrentDomain.BaseDirectory + "ListTest.dll";
+        listRand.Deserialize(File.OpenRead(testFilePath), out var processedListRand);
+        Assert.Pass();
+    }
 
     private void ValidateList(ListRand listRand, string testFilePath)
     {
@@ -43,15 +52,26 @@ public class Tests
         }
 
         var processedList = processedListRand.ToList();
-        for (int i = 0; i < initialList.Count - 1; i++)
+        for (int i = 0; i < initialList.Count; i++)
         {
-            if (initialList[i].Data.CompareTo(processedList[i].Data) != 0)
+            //check current node data
+            if (String.Compare(initialList[i].Data, processedList[i].Data, StringComparison.Ordinal) != 0)
             {
                 Assert.Fail();
             }
-
-            if (initialList[i].Rand != null && initialList[i].Rand.Data.CompareTo(processedList[i].Rand.Data) != 0 ||
-                initialList[i].Rand == processedList[i].Rand)
+            
+            //check rand links
+            if (initialList[i].Rand != null && initialList[i].Rand.Data.CompareTo(processedList[i].Rand.Data) != 0)
+            {
+                Assert.Fail();
+            } else if(initialList[i].Rand == null && initialList[i].Rand != processedList[i].Rand)
+            {
+                Assert.Fail();
+            }
+            
+            //check next and prev links
+            if (initialList[i].Next != null && String.Compare(initialList[i].Next.Data, processedList[i].Next.Data, StringComparison.Ordinal) != 0 ||
+                initialList[i].Prev != null && String.Compare(initialList[i].Prev.Data, processedList[i].Prev.Data, StringComparison.Ordinal) != 0)
             {
                 Assert.Fail();
             }
